@@ -1,0 +1,6 @@
+require("config.remap")
+require("config.lazy")
+require("config.telescope")
+require("lualine").setup()
+require("config.noice")
+require("config.lsp")
