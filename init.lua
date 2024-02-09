@@ -29,3 +29,15 @@ vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
 
+if vim.g.neovide then
+    vim.g.neovide_cursor_trail_legnth = 0
+    vim.g.neovide_cursor_animation_length = 0
+    vim.o.guifont = "Berkeley Mono"
+end
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = function(args)
+        vim.lsp.buf.format()
+    end,
+})
