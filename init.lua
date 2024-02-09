@@ -5,6 +5,7 @@ require("config.telescope")
 require("lualine").setup()
 require("config.settings")
 
+
 local autocmd = vim.api.nvim_create_autocmd
 
 
@@ -27,3 +28,4 @@ autocmd('LspAttach', {
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
+

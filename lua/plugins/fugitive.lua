@@ -28,7 +28,7 @@ return {
         })
 
 
-        vim.keymap.set("n", "gu", "<cmd>diffget //2<CR>")
-        vim.keymap.set("n", "gh", "<cmd>diffget //3<CR>")
+        vim.keymap.set("n", "<leader>G", "<cmd>Git<CR>")
+        vim.keymap.set("n", "<leader>gg", "<cmd>Git<CR>")
     end
 }
