@@ -11,10 +11,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 
-keymap("n", "<leader>gg", "")
-keymap("n", "<leader>gG", "")
-
-
 -- Normal --
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
