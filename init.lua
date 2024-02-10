@@ -3,7 +3,6 @@ require("config.lazy")
 require("config.notify")
 require("config.telescope")
 require("lualine").setup()
-require("config.settings")
 
 
 local autocmd = vim.api.nvim_create_autocmd
@@ -28,6 +27,7 @@ autocmd('LspAttach', {
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
+vim.g.netrw_liststyle = 3
 
 if vim.g.neovide then
     vim.g.neovide_cursor_trail_legnth = 0
@@ -42,3 +42,5 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         vim.lsp.buf.format()
     end,
 })
+
+require("config.settings")

@@ -2,7 +2,7 @@ return {
     {
         'navarasu/onedark.nvim',
         config = function()
-            require('onedark').setup  {
+            require('onedark').setup {
                 -- Main options --
                 style = 'dark', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
                 ending_tildes = true,
@@ -25,9 +25,9 @@ return {
 
                 -- Custom Highlights --
                 diagnostics = {
-                    darker = true, -- darker colors for diagnostic
-                    undercurl = true,   -- use undercurl instead of underline for diagnostics
-                    background = true,    -- use background color for virtual text
+                    darker = true,     -- darker colors for diagnostic
+                    undercurl = true,  -- use undercurl instead of underline for diagnostics
+                    background = true, -- use background color for virtual text
                 },
             }
             require('onedark').load()
