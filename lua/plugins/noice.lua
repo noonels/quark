@@ -14,6 +14,7 @@ return {
     },
     config = function()
         require("noice").setup({
+            vim.keymap.set("n", "<leader>q", "<cmd>NoiceDismiss<CR>", { desc = "Dismiss Notifications" }),
             -- add any config here
             lsp = {
                 -- override markdown rendering so that **cmp** and other plugins use **Treesitter**

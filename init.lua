@@ -35,11 +35,16 @@ if vim.g.neovide then
     vim.o.guifont = "Berkeley Mono"
 end
 
+-- Format before saving
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     ---@diagnostic disable-next-line: unused-local
     callback = function(args)
-        vim.lsp.buf.format()
+        if -- disable formatting for neogit
+            vim.lsp.buf.server_ready()
+        then
+            vim.lsp.buf.format()
+        end
     end,
 })
 
