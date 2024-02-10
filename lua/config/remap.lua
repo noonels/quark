@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pd", "<CMD>:Lexplore<CR>")
+vim.keymap.set("n", "<leader>pv", "<CMD>:Lexplore<CR>")
 
 -- quickly insert the Go mantra
 vim.keymap.set(
