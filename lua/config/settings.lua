@@ -39,3 +39,4 @@ vim.opt.list = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+vim.opt.guicursor = "n-v-c:block-Cursor/lCursor-blinkon0,i-ci-ve:ver25-Cursor/lCursor-blinkon0"
