@@ -29,11 +29,11 @@ return {
                 "lua_ls",
                 "rust_analyzer",
                 "tsserver",
+                "eslint",
                 "gopls",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
-
                     require("lspconfig")[server_name].setup {
                         capabilities = capabilities
                     }
@@ -51,6 +51,28 @@ return {
                             }
                         }
                     }
+                end,
+
+                ["tssserver"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.tsserver.setup {
+                        capabilities = capabilities,
+                        on_attach = function(client, bufnr)
+                            client.resolved_capabilities.document_formatting = false
+                        end,
+                    }
+                end,
+
+                ["eslint"] = function()
+                    local lspconfig = require("lspconfig")
+                    require 'lspconfig'.eslint.setup({
+                        on_attach = function(client, bufnr)
+                            vim.api.nvim_create_autocmd("BufWritePre", {
+                                buffer = bufnr,
+                                command = "EslintFixAll",
+                            })
+                        end,
+                    })
                 end,
             }
         })
