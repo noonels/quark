@@ -17,6 +17,9 @@ return {
             integrations = {
                 diffview = true,
             },
+            commit_editor = {
+                kind = "replace",
+            },
         })
 
         vim.keymap.set('n', '<leader>pg', neogit.open, {})
