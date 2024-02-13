@@ -31,6 +31,7 @@ return {
                 "tsserver",
                 "eslint",
                 "gopls",
+                "julials",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
