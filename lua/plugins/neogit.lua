@@ -18,7 +18,7 @@ return {
                 diffview = true,
             },
             commit_editor = {
-                kind = "replace",
+                kind = "split",
             },
         })
 
