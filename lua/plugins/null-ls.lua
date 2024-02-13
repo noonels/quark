@@ -32,10 +32,10 @@ local M = {
                 formatting.prettier,
                 formatting.eslint,
                 formatting.fish_indent,
-                -- diagnostics.eslint,
+                diagnostics.eslint,
                 diagnostics.fish,
-                -- diagnostics.tsc,
-                -- code_actions.eslint,
+                diagnostics.tsc,
+                code_actions.eslint,
                 code_actions.gitsigns,
                 completion.spell
             },

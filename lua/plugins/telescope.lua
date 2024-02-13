@@ -28,14 +28,13 @@ return {
                 local word = vim.fn.expand("<cWORD>")
                 builtin.grep_string({ search = word })
             end)
-            vim.keymap.set('n', '<leader>ps', function()
-                builtin.grep_string({ search = vim.fn.input("Grep > ") })
-            end)
+            vim.keymap.set('n', '<leader>ps', builtin.live_grep, {})
             vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
             vim.keymap.set('n', '<leader>pp', project.project, {})
             vim.keymap.set('n', '<leader>gk', builtin.keymaps, {})
             vim.keymap.set('n', '<leader>vn', notify.notify, {})
             vim.keymap.set('n', '<leader>pt', worktree.git_worktrees, {})
+            vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
         end,
     },
 }
