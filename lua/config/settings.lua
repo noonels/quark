@@ -28,7 +28,7 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = { 81, 101, 121 }
 
 vim.opt.listchars = {
-	tab = "»·",
+	tab = "» ",
 	trail = "·",
 	extends = "→",
 	precedes = "←",
