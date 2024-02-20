@@ -1,132 +1,101 @@
 return {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-cmdline",
-        "hrsh7th/nvim-cmp",
-        "L3MON4D3/LuaSnip",
-        "saadparwaiz1/cmp_luasnip",
-        "j-hui/fidget.nvim",
-    },
+	"VonHeikemen/lsp-zero.nvim",
+	dependencies = {
+		"neovim/nvim-lspconfig",
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+		"hrsh7th/nvim-cmp",
+		"hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-buffer",
+		"hrsh7th/cmp-path",
+		"saadparwaiz1/cmp_luasnip",
+		"hrsh7th/cmp-nvim-lua",
+		"L3MON4D3/LuaSnip",
+		"rafamadriz/friendly-snippets",
+	},
+	config = function()
+		local lsp_zero = require("lsp-zero")
 
-    config = function()
-        local cmp = require('cmp')
-        local cmp_lsp = require("cmp_nvim_lsp")
-        local capabilities = vim.tbl_deep_extend(
-            "force",
-            {},
-            vim.lsp.protocol.make_client_capabilities(),
-            cmp_lsp.default_capabilities())
+		lsp_zero.on_attach(function(client, bufnr)
+			local opts = { buffer = bufnr, remap = false }
 
-        require("fidget").setup({})
-        require("mason").setup()
-        require("mason-lspconfig").setup({
-            ensure_installed = {
-                "lua_ls",
-                "rust_analyzer",
-                "tsserver",
-                "eslint",
-                "gopls",
-                "julials",
-                "zls",
-            },
-            handlers = {
-                function(server_name) -- default handler (optional)
-                    require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
-                    }
-                end,
+			vim.keymap.set("n", "gd", function()
+				vim.lsp.buf.definition()
+			end, opts)
+			vim.keymap.set("n", "K", function()
+				vim.lsp.buf.hover()
+			end, opts)
+			vim.keymap.set("n", "<leader>vws", function()
+				vim.lsp.buf.workspace_symbol()
+			end, opts)
+			vim.keymap.set("n", "<leader>vd", function()
+				vim.diagnostic.open_float()
+			end, opts)
+			vim.keymap.set("n", "[d", function()
+				vim.diagnostic.goto_next()
+			end, opts)
+			vim.keymap.set("n", "]d", function()
+				vim.diagnostic.goto_prev()
+			end, opts)
+			vim.keymap.set("n", "<leader>vca", function()
+				vim.lsp.buf.code_action()
+			end, opts)
+			vim.keymap.set("n", "<leader>vrr", function()
+				vim.lsp.buf.references()
+			end, opts)
+			vim.keymap.set("n", "<leader>vrn", function()
+				vim.lsp.buf.rename()
+			end, opts)
+			vim.keymap.set("i", "<C-h>", function()
+				vim.lsp.buf.signature_help()
+			end, opts)
+		end)
 
-                ["lua_ls"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.lua_ls.setup {
-                        capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = { "vim", "it", "describe", "before_each", "after_each" },
-                                }
-                            }
-                        }
-                    }
-                end,
+		require("mason").setup({})
+		require("mason-lspconfig").setup({
+			ensure_installed = { "tsserver", "rust_analyzer", "eslint", "lua_ls" },
+			handlers = {
+				lsp_zero.default_setup,
+				lua_ls = function()
+					local lua_opts = lsp_zero.nvim_lua_ls()
+					require("lspconfig").lua_ls.setup(lua_opts)
+				end,
+				["eslint"] = function()
+					local lspconfig = require("lspconfig")
+					lspconfig.eslint.setup({
+						on_attach = function(client, bufnr)
+							vim.api.nvim_create_autocmd("BufWritePre", {
+								buffer = bufnr,
+								command = "EslintFixAll",
+							})
+						end,
+					})
+				end,
+			},
+		})
 
-                ["tssserver"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.tsserver.setup {
-                        capabilities = capabilities,
-                        on_attach = function(client, bufnr)
-                            client.resolved_capabilities.document_formatting = false
-                        end,
-                    }
-                end,
+		local cmp = require("cmp")
+		local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
-                ["eslint"] = function()
-                    local lspconfig = require("lspconfig")
-                    require 'lspconfig'.eslint.setup({
-                        on_attach = function(client, bufnr)
-                            vim.api.nvim_create_autocmd("BufWritePre", {
-                                buffer = bufnr,
-                                command = "EslintFixAll",
-                            })
-                        end,
-                    })
-                end,
-            }
-        })
+		-- this is the function that loads the extra snippets to luasnip
+		-- from rafamadriz/friendly-snippets
+		require("luasnip.loaders.from_vscode").lazy_load()
 
-        local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-        cmp.setup({
-            snippet = {
-                expand = function(args)
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-                end,
-            },
-            mapping = cmp.mapping.preset.insert({
-                ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-                ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<C-d>'] = cmp.mapping.scroll_docs(4),
-                ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-                ['<C-Space>'] = cmp.mapping.complete(),
-                ['<C-g>'] = cmp.mapping.close(),
-                ['<Tab>'] = cmp.mapping.confirm({
-                    behavior = cmp.ConfirmBehavior.Replace,
-                    select = true,
-                }),
-            }),
-            sources = cmp.config.sources({
-                {
-                    name = 'nvim_lsp',
-                    entry_filter = function(entry, ctx)
-                        return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
-                    end
-                },
-                { name = 'luasnip' }, -- For luasnip users.
-            })
-        })
-
-        local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-        for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-        end
-
-        vim.diagnostic.config({
-            -- update_in_insert = true,
-            signs = true,
-            float = {
-                focusable = false,
-                style = "minimal",
-                border = "rounded",
-                source = "always",
-                header = "",
-                prefix = "",
-            },
-        })
-    end
+		cmp.setup({
+			sources = {
+				{ name = "path" },
+				{ name = "nvim_lsp" },
+				{ name = "nvim_lua" },
+				{ name = "luasnip", keyword_length = 2 },
+				{ name = "buffer", keyword_length = 3 },
+			},
+			formatting = lsp_zero.cmp_format(),
+			mapping = cmp.mapping.preset.insert({
+				["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+				["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+				["<C-y>"] = cmp.mapping.confirm({ select = true }),
+				["<C-Space>"] = cmp.mapping.complete(),
+			}),
+		})
+	end,
 }
