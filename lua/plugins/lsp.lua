@@ -53,7 +53,7 @@ return {
 
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
-			ensure_installed = { "tsserver", "rust_analyzer", "eslint", "lua_ls" },
+			ensure_installed = { "tsserver", "rust_analyzer", "eslint", "lua_ls", "gopls" },
 			handlers = {
 				lsp_zero.default_setup,
 				lua_ls = function()
@@ -67,6 +67,17 @@ return {
 							vim.api.nvim_create_autocmd("BufWritePre", {
 								buffer = bufnr,
 								command = "EslintFixAll",
+							})
+						end,
+					})
+				end,
+				["gopls"] = function()
+					local lspconfig = require("lspconfig")
+					lspconfig.gopls.setup({
+						on_attach = function(client, bufnr)
+							vim.api.nvim_create_autocmd("BufWritePre", {
+								buffer = bufnr,
+								command = "lua vim.lsp.buf.format()",
 							})
 						end,
 					})

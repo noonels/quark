@@ -1,6 +1,6 @@
 return {
 	"Olical/conjure",
-	ft = { "clojure", "fennel", "python", "julia" }, -- etc
+	ft = { "clojure", "fennel", "python", "julia", "lisp", "hy" },
 	-- [Optional] cmp-conjure for cmp
 	dependencies = {
 		{
