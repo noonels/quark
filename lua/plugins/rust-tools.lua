@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		"neovim/nvim-lspconfig",
 		"nvim-lua/plenary.nvim",
+		"VonHeikemen/lsp-zero.nvim", -- ensure that lsp-zero is run *first*
 	},
 	opts = {
 		tools = { -- rust-tools options
