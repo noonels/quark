@@ -51,6 +51,20 @@ return {
 			end, opts)
 		end)
 
+		lsp_zero.format_on_save({
+			format_opts = {
+				async = false,
+				timeout_ms = 10000,
+			},
+			servers = {
+				["eslint"] = { "javascript", "typescript" },
+				["rust_analyzer"] = { "rust" },
+				["lua_ls"] = { "lua" },
+				["gopls"] = { "go" },
+				["hls"] = { "haskell" },
+			},
+		})
+
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
 			ensure_installed = { "tsserver", "rust_analyzer", "eslint", "lua_ls", "gopls", "hls" },
@@ -59,39 +73,6 @@ return {
 				lua_ls = function()
 					local lua_opts = lsp_zero.nvim_lua_ls()
 					require("lspconfig").lua_ls.setup(lua_opts)
-				end,
-				["eslint"] = function()
-					local lspconfig = require("lspconfig")
-					lspconfig.eslint.setup({
-						on_attach = function(client, bufnr)
-							vim.api.nvim_create_autocmd("BufWritePre", {
-								buffer = bufnr,
-								command = "EslintFixAll",
-							})
-						end,
-					})
-				end,
-				["gopls"] = function()
-					local lspconfig = require("lspconfig")
-					lspconfig.gopls.setup({
-						on_attach = function(client, bufnr)
-							vim.api.nvim_create_autocmd("BufWritePre", {
-								buffer = bufnr,
-								command = "lua vim.lsp.buf.format()",
-							})
-						end,
-					})
-				end,
-				["rust_analyzer"] = function()
-					local lspconfig = require("lspconfig")
-					lspconfig.rust_analyzer.setup({
-						on_attach = function(client, bufnr)
-							vim.api.nvim_create_autocmd("BufWritePre", {
-								buffer = bufnr,
-								command = "lua vim.lsp.buf.format()",
-							})
-						end,
-					})
 				end,
 			},
 		})
