@@ -15,7 +15,7 @@ return {
 
 			local builtin = require("telescope.builtin")
 			local project = require("telescope").extensions.project
-			local notify = require("telescope").extensions.notify
+			-- local notify = require("telescope").extensions.notify
 			local worktree = require("telescope").extensions.git_worktree
 
 			vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
@@ -32,7 +32,7 @@ return {
 			vim.keymap.set("n", "<leader>vh", builtin.help_tags, {})
 			vim.keymap.set("n", "<leader>pp", project.project, {})
 			vim.keymap.set("n", "<leader>gk", builtin.keymaps, {})
-			vim.keymap.set("n", "<leader>vn", notify.notify, {})
+			-- vim.keymap.set("n", "<leader>vn", notify.notify, {})
 			vim.keymap.set("n", "<leader>pt", worktree.git_worktrees, {})
 			vim.keymap.set("n", "<leader>pb", builtin.buffers, {})
 		end,

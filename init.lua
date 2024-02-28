@@ -1,6 +1,6 @@
 require("config.remap")
 require("config.lazy")
-require("config.notify")
+-- require("config.notify")
 require("config.telescope")
 require("lualine").setup()
 
