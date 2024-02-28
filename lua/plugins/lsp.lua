@@ -58,8 +58,8 @@ return {
 			},
 			servers = {
 				["eslint"] = { "javascript", "typescript" },
-				["rust_analyzer"] = { "rust" },
-				["lua_ls"] = { "lua" },
+				-- ["rust_analyzer"] = { "rust" },
+				["stylua"] = { "lua" },
 				["gopls"] = { "go" },
 				["hls"] = { "haskell" },
 			},
@@ -67,7 +67,7 @@ return {
 
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
-			ensure_installed = { "tsserver", "rust_analyzer", "eslint", "lua_ls", "gopls", "hls" },
+			ensure_installed = { "tsserver", "eslint", "lua_ls", "gopls", "hls" },
 			handlers = {
 				lsp_zero.default_setup,
 				lua_ls = function()
