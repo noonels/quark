@@ -26,6 +26,7 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = { 81, 101, 121 }
+vim.opt.cursorline = true
 
 vim.opt.listchars = {
 	tab = "» ",
