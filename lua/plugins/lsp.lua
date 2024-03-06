@@ -57,8 +57,8 @@ return {
 				timeout_ms = 10000,
 			},
 			servers = {
-				["eslint"] = { "javascript", "typescript" },
-				-- ["rust_analyzer"] = { "rust" },
+				-- ["eslint"] = { "javascript", "typescript" }, -- configuring manually
+				["rust_analyzer"] = { "rust" },
 				["stylua"] = { "lua" },
 				["gopls"] = { "go" },
 				["hls"] = { "haskell" },
@@ -73,6 +73,17 @@ return {
 				lua_ls = function()
 					local lua_opts = lsp_zero.nvim_lua_ls()
 					require("lspconfig").lua_ls.setup(lua_opts)
+				end,
+                ["eslint"] = function()
+					local lspconfig = require("lspconfig")
+					lspconfig.eslint.setup({
+						on_attach = function(client, bufnr)
+							vim.api.nvim_create_autocmd("BufWritePre", {
+								buffer = bufnr,
+								command = "EslintFixAll",
+							})
+						end,
+					})
 				end,
 			},
 		})
