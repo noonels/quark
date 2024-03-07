@@ -13,6 +13,7 @@ return {
 				javascript = { { "prettierd", "prettier" } },
 				typescript = { { "eslint", "prettierd", "prettier" } },
 				rust = { "rustfmt" },
+				go = { "gofmt", "goimports", "golines" },
 			},
 		})
 		vim.api.nvim_create_autocmd("BufWritePre", {
