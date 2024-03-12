@@ -12,6 +12,7 @@ return {
 		"hrsh7th/cmp-nvim-lua",
 		"L3MON4D3/LuaSnip",
 		"rafamadriz/friendly-snippets",
+		"onsails/lspkind.nvim",
 	},
 	config = function()
 		local lsp_zero = require("lsp-zero")
@@ -74,6 +75,7 @@ return {
 			},
 		})
 
+		local lspkind = require("lspkind")
 		local cmp = require("cmp")
 		local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
@@ -89,7 +91,13 @@ return {
 				{ name = "luasnip", keyword_length = 2 },
 				{ name = "buffer", keyword_length = 3 },
 			},
-			formatting = lsp_zero.cmp_format(),
+			formatting = {
+				format = lspkind.cmp_format({
+					mode = "symbol_text",
+					maxwidth = 100,
+					ellispsis_char = "...",
+				}),
+			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
 				["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
