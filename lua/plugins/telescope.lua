@@ -35,6 +35,8 @@ return {
 			-- vim.keymap.set("n", "<leader>vn", notify.notify, {})
 			vim.keymap.set("n", "<leader>pt", worktree.git_worktrees, {})
 			vim.keymap.set("n", "<leader>pb", builtin.buffers, {})
+			vim.keymap.set("n", "gd", "<CMD>Telescope lsp_definition<CR>")
+			vim.keymap.set("n", "<leader>vr", "<CMD>Telescope lsp_references<CR>")
 		end,
 	},
 }
