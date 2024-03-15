@@ -12,6 +12,7 @@ local M = {
 				"css",
 				"dockerfile",
 				"elixir",
+				"gleam",
 				"go",
 				"graphql",
 				"haskell",

@@ -5,7 +5,7 @@ return {
 		require("conform").setup({
 			format_on_save = {
 				timeout_ms = 500,
-				lsp_fallback = false,
+				lsp_fallback = true,
 			},
 			formatters_by_ft = {
 				lua = { "stylua" },
@@ -14,6 +14,7 @@ return {
 				typescript = { { "eslint", "prettierd", "prettier" } },
 				rust = { "rustfmt" },
 				go = { "gofmt", "goimports", "golines" },
+				gleam = { "gleam" },
 			},
 		})
 		vim.api.nvim_create_autocmd("BufWritePre", {
