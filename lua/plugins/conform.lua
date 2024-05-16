@@ -12,6 +12,7 @@ return {
 				python = { "isort", "black" },
 				javascript = { { "prettier" } },
 				typescript = { { "eslint_d", "prettier" } },
+				typescriptreact = { { "eslint_d", "prettier" } },
 				rust = { "rustfmt" },
 				go = { "gofmt", "goimports", "golines" },
 				gleam = { "gleam" },
