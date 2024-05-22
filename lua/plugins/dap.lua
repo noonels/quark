@@ -12,6 +12,7 @@ return {
 		-- auto-setup
 		require("nvim-dap-virtual-text").setup()
 		require("dap-go").setup()
+		require("dapui").setup()
 
 		-- listeners for dapui
 		dap.listeners.before.attach.dapui_config = function()

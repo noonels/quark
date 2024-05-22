@@ -16,6 +16,7 @@ return {
 				rust = { "rustfmt" },
 				go = { "gofmt", "goimports", "golines" },
 				gleam = { "gleam" },
+				cpp = { "clang_format" },
 			},
 		})
 		vim.api.nvim_create_autocmd("BufWritePre", {
