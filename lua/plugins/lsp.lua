@@ -48,7 +48,7 @@ return {
 
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
-			ensure_installed = { "fortls", "gleam", "tsserver", "eslint", "lua_ls", "gopls", "hls", "clangd" },
+			ensure_installed = { "fortls", "tsserver", "eslint", "lua_ls", "gopls", "hls", "clangd" },
 			handlers = {
 				lsp_zero.default_setup,
 				lua_ls = function()
